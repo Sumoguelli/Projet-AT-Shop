@@ -1,9 +1,7 @@
 <?php
 session_start();
-
-require_once __DIR__ . '/../autoload.php';
-require_once __DIR__ . '/../config/database.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -14,29 +12,36 @@ require_once __DIR__ . '/../config/database.php';
 <body>
 
 <header>
-    <h1>AT Shop</h1>
-</header>
+    <h1>🧱 AT Shop</h1>
+    <nav>
+        <a href="/Projet-AT-Shop/public/index.php">Accueil</a>
+        <a href="/Projet-AT-Shop/public/shop.php">Boutique</a>
 
-<div class="container">
-    <p>Bienvenue sur AT Shop</p>
-
-    <?php if (!isset($_SESSION['user'])): ?>
-
-        <a href="login.php">Se connecter</a> |
-        <a href="register.php">S’inscrire</a>
-
-    <?php else: ?>
-
-        <a href="shop.php">Accéder à la boutique</a>
-
-        <?php if ($_SESSION['user']['role'] === 'ROLE_ADMIN'): ?>
-            | <a href="admin/dashboard.php">Admin</a>
+        <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'ROLE_ADMIN'): ?>
+            <a href="/Projet-AT-Shop/public/admin/dashboard.php">Admin</a>
         <?php endif; ?>
 
-        | <a href="logout.php">Déconnexion</a>
+        <?php if (isset($_SESSION['user'])): ?>
+            <a href="/Projet-AT-Shop/public/logout.php">Déconnexion</a>
+        <?php else: ?>
+            <a href="/Projet-AT-Shop/public/login.php">Connexion</a>
+        <?php endif; ?>
+    </nav>
 
+</header>
+
+<section class="hero">
+    <h2>Bienvenue sur AT Shop</h2>
+    <p>Boutique Minecraft – armes, armures et grades premium</p>
+
+    <a href="/Projet-AT-Shop/public/shop.php">Accéder à la boutique</a>
+    <?php if (!isset($_SESSION['user'])): ?>
+        <a href="/Projet-AT-Shop/public/login.php" class="secondary">Se connecter</a>
     <?php endif; ?>
-</div>
+</section>
 
-</body>
-</html>
+<footer>
+    © <?= date('Y') ?> AT Shop – Projet Systèmes & Réseaux
+</footer>
+
+</b
