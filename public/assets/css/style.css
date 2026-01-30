@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f5f6fa;
+    color: #333;
+    padding: 20px;
+}
+
+/* ====== HEADER ====== */
+header {
+    background: #2c3e50;
+    color: white;
+    padding: 15px 30px;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 24px;
+}
+
+/* ====== LINKS ====== */
+a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ====== BUTTONS ====== */
+button {
+    background: #3498db;
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+/* ====== FORMS ====== */
+form {
+    background: white;
+    padding: 20px;
+    border-radius: 6px;
+    max-width: 400px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+form input,
+form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* ====== ADMIN DASHBOARD ====== */
+.product-card {
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.08);
+}
+
+.product-card strong {
+    font-size: 18px;
+}
+
+.stock-ok {
+    color: green;
+    font-weight: bold;
+}
+
+.stock-low {
+    color: orange;
+    font-weight: bold;
+}
+
+.stock-zero {
+    color: red;
+    font-weight: bold;
+}
+
+/* ====== CONTAINER ====== */
+.container {
+    max-width: 1000px;
+    margin: auto;
+}

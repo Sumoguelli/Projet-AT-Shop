@@ -1,25 +1,54 @@
 <?php
 session_start();
-
 require_once __DIR__ . '/../autoload.php';
 require_once __DIR__ . '/../config/database.php';
 
+use Entity\User;
 use Repository\UserRepository;
-use Controller\AuthController;
 
-$repo = new UserRepository($pdo);
-$auth = new AuthController($repo);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $repo = new UserRepository($pdo);
 
-if ($_POST) {
-    $auth->register($_POST['pseudo'], $_POST['email'], $_POST['password']);
+    $user = new User(
+            null,
+            $_POST['pseudo'],
+            $_POST['email'],
+            password_hash($_POST['password'], PASSWORD_DEFAULT),
+            'user'
+    );
+
+    $repo->create($user);
     header('Location: login.php');
     exit;
 }
 ?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="/Projet-AT-Shop/public/assets/css/style.css">
+</head>
+<body>
 
-<form method="post">
-    <input type="text" name="pseudo" placeholder="Pseudo" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="password" name="password" placeholder="Mot de passe" required>
-    <button type="submit">Inscription</button>
-</form>
+<header>
+    <h1>Inscription</h1>
+</header>
+
+<div class="container">
+    <form method="post">
+        Pseudo
+        <input name="pseudo" required>
+
+        Email
+        <input type="email" name="email" required>
+
+        Mot de passe
+        <input type="password" name="password" required>
+
+        <button>S’inscrire</button>
+    </form>
+</div>
+
+</body>
+</html>

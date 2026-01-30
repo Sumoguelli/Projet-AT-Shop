@@ -5,36 +5,28 @@ require_once __DIR__ . '/../../autoload.php';
 require_once __DIR__ . '/../../config/database.php';
 
 use Security\Auth;
-use Controller\AdminController;
 use Repository\ProductRepository;
+use Entity\Product;
 
 Auth::requireAdmin();
 
 $repo = new ProductRepository($pdo);
-$controller = new AdminController($pdo, $repo);
+$product = $repo->find((int) $_GET['id']);
 
-if (!isset($_GET['id'])) {
-    header('Location: products.php');
-    exit;
-}
+if (!$product) die('Produit introuvable');
 
-$product = $repo->find((int)$_GET['id']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $updated = new Product(
+            $product->getId(),
+            $_POST['name'],
+            $_POST['description'],
+            (float) $_POST['price'],
+            (int) $_POST['category_id'],
+            (int) $_POST['stock']
+    );
 
-if ($_POST) {
-    $controller->update($product->getId(), $_POST);
-    header('Location: products.php');
+    $repo->update($updated);
+    header('Location: dashboard.php');
     exit;
 }
 ?>
-
-<h1>Modifier produit</h1>
-
-<form method="post">
-    <input name="name" value="<?= htmlspecialchars($product->getName()) ?>"><br>
-    <textarea name="description"><?= htmlspecialchars($product->getDescription()) ?></textarea><br>
-    <input name="price" type="number" step="0.01" value="<?= $product->getPrice() ?>"><br>
-    <input name="stock" type="number" value="<?= $product->getStock() ?>"><br>
-    <input name="type" value="<?= $product->getType() ?>"><br>
-    <input name="category_id" type="number" value="<?= $product->getCategoryId() ?>"><br>
-    <button>Modifier</button>
-</form>
